@@ -5,7 +5,7 @@
  */
 var TVmaze = (function tvMaze() {
   /**
-   * @namespace tvMaze
+   * @module TVmaze
    */
   'use strict';
 
@@ -16,7 +16,7 @@ var TVmaze = (function tvMaze() {
    *
    * @param {String} url The API request URL.
    * @returns {Promise.<Array.<Object>>} Array of objects.
-   * @memberof tvMaze
+   * @memberof module:TVmaze
    * @private
    */
   function getJSON(url) {
@@ -46,7 +46,7 @@ var TVmaze = (function tvMaze() {
    *
    * @param {String} query The search query.
    * @returns {Promise.<Array.<Object>|Object>} Search results.
-   * @memberof tvMaze
+   * @memberof module:TVmaze
    */
   function showSearch(query) {
     return getJSON(rootURL + "/search/shows?q=" + query);
@@ -57,7 +57,7 @@ var TVmaze = (function tvMaze() {
    *
    * @param {String} query The search query.
    * @returns {Promise.<Object>} Single search result.
-   * @memberof tvMaze
+   * @memberof module:TVmaze
    */
   function singleSearch(query) {
     return getJSON(rootURL + "/singlesearch/shows?q=" + query);
@@ -70,7 +70,7 @@ var TVmaze = (function tvMaze() {
    * @param {Number} id The show's TVRage or TheTVDB ID.
    * @param {String} source Either <b>tvrage</b> or <b>thetvdb</b>.
    * @returns {Promise.<Object>} Information about the show.
-   * @memberof tvMaze
+   * @memberof module:TVmaze
    */
   function showLookup(id, source) {
     return getJSON(rootURL + "/lookup/shows?" + source + "=" + id);
@@ -81,7 +81,7 @@ var TVmaze = (function tvMaze() {
    *
    * @param {String} query The search query.
    * @returns {Promise.<Array.<Object>|Object>} List of people.
-   * @memberof tvMaze
+   * @memberof module:TVmaze
    */
   function peopleSearch(query) {
     return getJSON(rootURL + "/search/people?q=" + query);
@@ -96,7 +96,7 @@ var TVmaze = (function tvMaze() {
    * @param {String|null} date ISO 8601 formatted date. If set to null, it
    * returns the schedule for the current day.
    * @returns {Promise.<Array.<Object>>}
-   * @memberof tvMaze
+   * @memberof module:TVmaze
    */
   function schedule(countryCode, date) {
     var schedURL = "/schedule";
@@ -118,7 +118,7 @@ var TVmaze = (function tvMaze() {
    * country.
    *
    * @returns {Promise.<Array.<Object>>} List of all future episodes.
-   * @memberof tvMaze
+   * @memberof module:TVmaze
    */
   function fullSchedule() {
     return getJSON(rootURL + "/schedule/full");
@@ -129,7 +129,7 @@ var TVmaze = (function tvMaze() {
    *
    * @param {Number} id TVmaze ID of the show.
    * @returns {Promise.<Object>} Primary information for a given show.
-   * @memberof tvMaze
+   * @memberof module:TVmaze
    */
   function shows(id) {
     return getJSON(rootURL + "/shows/" + id);
@@ -143,7 +143,7 @@ var TVmaze = (function tvMaze() {
    * specials.
    * @returns {Promise.<Array.<Object>>} Complete list of episodes for the
    * given show.
-   * @memberof tvMaze
+   * @memberof module:TVmaze
    */
   function showEpisodeList(id, specials) {
     var apiURL = "/shows/" + id + "/episodes";
@@ -161,7 +161,7 @@ var TVmaze = (function tvMaze() {
    * @param {Number} season Season number.
    * @param {Number} episode Episode number.
    * @returns {Promise.<Object>} Information about the episode.
-   * @memberof tvMaze
+   * @memberof module:TVmaze
    */
   function episodeByNumber(id, season, episode) {
     return getJSON(rootURL + "/shows/" + id + "/episodebynumber?season=" +
@@ -174,7 +174,7 @@ var TVmaze = (function tvMaze() {
    * @param {Number} id TVmaze ID of the show.
    * @param {String} date ISO 8601 formatted date.
    * @returns {Promise.<Array.<Object>|Object>}
-   * @memberof tvMaze
+   * @memberof module:TVmaze
    */
   function episodeByDate (id, date) {
     return getJSON(rootURL + "/shows/" + id + "/episodesbydate?date=" + date);
@@ -185,7 +185,7 @@ var TVmaze = (function tvMaze() {
    *
    * @param {Number} id TVmaze ID of the show.
    * @returns {Promise.<Array.<Object>>} List of main cast for the show.
-   * @memberof tvMaze
+   * @memberof module:TVmaze
    */
   function showCast(id) {
     return getJSON(rootURL + "/shows/" + id + "/cast");
@@ -196,7 +196,7 @@ var TVmaze = (function tvMaze() {
    *
    * @param {Number} id TVmaze ID of the show.
    * @returns {Promise.<Array.<Object>|Object>} List of aliases for the show.
-   * @memberof tvMaze
+   * @memberof module:TVmaze
    */
   function showAKAs(id) {
     return getJSON(rootURL + "/shows/" + id + "/akas");
@@ -209,7 +209,7 @@ var TVmaze = (function tvMaze() {
    * 
    * @param {Number} pageNumber The page number.
    * @returns {Promise.<Array.<Object>>} List of shows in the TVmaze database.
-   * @memberof tvMaze
+   * @memberof module:TVmaze
    */
   function showIndex(pageNumber) {
     return getJSON(rootURL + "/shows?page=" + pageNumber);
@@ -221,7 +221,7 @@ var TVmaze = (function tvMaze() {
    * @param {Number} id TVmaze ID of the person.
    * @param {Boolean|null} embed If <b>true</b>, embeds cast credits for the person.
    * @returns {Promise.<Object>} All primary information for a given person.
-   * @memberof tvMaze
+   * @memberof module:TVmaze
    */
   function personInfo(id, embed) {
     var apiURL = "/people/" + id;
@@ -238,7 +238,7 @@ var TVmaze = (function tvMaze() {
    * @param {Boolean|null} embed If <b>true</b>, embeds full information for the shows
    * and characters.
    * @returns {Promise.<Array.<Object>|Object>} All (show-level) cast credits.
-   * @memberof tvMaze
+   * @memberof module:TVmaze
    */
   function personCastCredits(id, embed) {
     var apiURL = "/people/" + id + "/castcredits";
@@ -255,7 +255,7 @@ var TVmaze = (function tvMaze() {
    * @param {Boolean|null} embed If <b>true</b>, embeds full information for the
    * shows.
    * @returns {Promise.<Array.<Object>|Object>} All (show-level) crew credits.
-   * @memberof tvMaze
+   * @memberof module:TVmaze
    */
   function personCrewCredits(id, embed) {
     var apiURL = "/people/" + id + "/crewcredits";
@@ -271,7 +271,7 @@ var TVmaze = (function tvMaze() {
    *
    * @returns {Promise.<Object>} A list of all shows in the TVmaze database
    * and the timestamp when they were updated.
-   * @memberof tvMaze
+   * @memberof module:TVmaze
    */
   function showUpdates() {
     return getJSON(rootURL + "/updates/shows");
