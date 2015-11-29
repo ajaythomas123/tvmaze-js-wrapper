@@ -1,2 +1,2 @@
 # tvmaze-js-wrapper
-JavaScript wrapper for the [TVMaze API](http://www.tvmaze.com/api) that returns promises.
+A promise-based JavaScript wrapper for the [TVmaze API](http://www.tvmaze.com/api).
