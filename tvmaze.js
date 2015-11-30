@@ -1,5 +1,6 @@
 /**
- * @overview A promise-based JavaScript wrapper for the [TVmaze API]{@link http://www.tvmaze.com/api}.
+ * @overview A promise-based JavaScript wrapper for the
+ * [TVmaze API]{@link http://www.tvmaze.com/api}.
  * @author Ajay Thomas <ajaythomas123@gmail.com>
  * @license MIT
  */
@@ -22,7 +23,7 @@ var TVmaze = (function tvMaze() {
   function getJSON(url) {
     return new Promise(function(resolve, reject){
       var req = new XMLHttpRequest();
-      req.open("GET", url);
+      req.open('GET', url);
       req.responseType = 'json';
       req.onload = function() {
         if (req.status == 200) {
@@ -49,7 +50,7 @@ var TVmaze = (function tvMaze() {
    * @memberof module:TVmaze
    */
   function showSearch(query) {
-    return getJSON(rootURL + "/search/shows?q=" + query);
+    return getJSON(rootURL + "/search/shows?q=" + encodeURIComponent(query));
   }
 
   /**
@@ -60,7 +61,7 @@ var TVmaze = (function tvMaze() {
    * @memberof module:TVmaze
    */
   function singleSearch(query) {
-    return getJSON(rootURL + "/singlesearch/shows?q=" + query);
+    return getJSON(rootURL + "/singlesearch/shows?q=" + encodeURIComponent(query));
   }
 
   /**
@@ -84,7 +85,7 @@ var TVmaze = (function tvMaze() {
    * @memberof module:TVmaze
    */
   function peopleSearch(query) {
-    return getJSON(rootURL + "/search/people?q=" + query);
+    return getJSON(rootURL + "/search/people?q=" + encodeURIComponent(query));
   }
 
   /**
@@ -92,9 +93,9 @@ var TVmaze = (function tvMaze() {
    * day.
    *
    * @param {String|null} countryCode ISO 3166-1 code of the country. If set to
-   * null, it returns the schedule for the US.
+   *     null, it returns the schedule for the US.
    * @param {String|null} date ISO 8601 formatted date. If set to null, it
-   * returns the schedule for the current day.
+   *     returns the schedule for the current day.
    * @returns {Promise.<Array.<Object>>}
    * @memberof module:TVmaze
    */
@@ -140,9 +141,9 @@ var TVmaze = (function tvMaze() {
    * 
    * @param {Number} id TVmaze ID of the show.
    * @param {Boolean|null} specials If <b>true</b>, the list will include
-   * specials.
+   *     specials.
    * @returns {Promise.<Array.<Object>>} Complete list of episodes for the
-   * given show.
+   *     given show.
    * @memberof module:TVmaze
    */
   function showEpisodeList(id, specials) {
@@ -219,7 +220,8 @@ var TVmaze = (function tvMaze() {
    * Retrieve all primary information for a given person.
    *
    * @param {Number} id TVmaze ID of the person.
-   * @param {Boolean|null} embed If <b>true</b>, embeds cast credits for the person.
+   * @param {Boolean|null} embed If <b>true</b>, embeds cast credits for the
+   *     person.
    * @returns {Promise.<Object>} All primary information for a given person.
    * @memberof module:TVmaze
    */
@@ -235,8 +237,8 @@ var TVmaze = (function tvMaze() {
    * Retrieve all (show-level) cast credits for a person.
    *
    * @param {Number} id TVmaze ID of the show.
-   * @param {Boolean|null} embed If <b>true</b>, embeds full information for the shows
-   * and characters.
+   * @param {Boolean|null} embed If <b>true</b>, embeds full information for
+   *     the shows and characters.
    * @returns {Promise.<Array.<Object>|Object>} All (show-level) cast credits.
    * @memberof module:TVmaze
    */
@@ -252,8 +254,8 @@ var TVmaze = (function tvMaze() {
    * Retrive all (show-level) crew credits for a person.
    *
    * @param {Number} id TVmaze ID of the show.
-   * @param {Boolean|null} embed If <b>true</b>, embeds full information for the
-   * shows.
+   * @param {Boolean|null} embed If <b>true</b>, embeds full information for
+   *     the shows.
    * @returns {Promise.<Array.<Object>|Object>} All (show-level) crew credits.
    * @memberof module:TVmaze
    */
@@ -270,7 +272,7 @@ var TVmaze = (function tvMaze() {
    * when they were last updated.
    *
    * @returns {Promise.<Object>} A list of all shows in the TVmaze database
-   * and the timestamp when they were updated.
+   *     and the timestamp when they were updated.
    * @memberof module:TVmaze
    */
   function showUpdates() {
