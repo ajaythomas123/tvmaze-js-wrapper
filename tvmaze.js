@@ -1,6 +1,7 @@
 /**
  * @overview A promise-based JavaScript wrapper for the
  * [TVmaze API]{@link http://www.tvmaze.com/api}.
+ * @version 0.1.0
  * @author Ajay Thomas <ajaythomas123@gmail.com>
  * @license MIT
  */
@@ -46,7 +47,11 @@ var TVmaze = (function tvMaze() {
    * Retrieve search results.
    *
    * @param {String} query The search query.
-   * @returns {Promise.<Array.<Object>|Object>} Search results.
+   * @returns {Promise.<Array.<Object>>} Search results.
+   * @example
+   * TVmaze.showSearch("breaking bad").then(function(result) {
+   *   console.log(result);
+   * });
    * @memberof module:TVmaze
    */
   function showSearch(query) {
@@ -58,19 +63,29 @@ var TVmaze = (function tvMaze() {
    *
    * @param {String} query The search query.
    * @returns {Promise.<Object>} Single search result.
+   * @example
+   * TVmaze.singleSearch("orange is the new black").then(function(result) {
+   *   console.log(result);
+   * });
    * @memberof module:TVmaze
    */
   function singleSearch(query) {
-    return getJSON(rootURL + "/singlesearch/shows?q=" + encodeURIComponent(query));
+    return getJSON(rootURL + "/singlesearch/shows?q=" +
+      encodeURIComponent(query));
   }
 
   /**
-   * Retrieve information about the show from [TVRage]{@link http://www.tvrage.com} or
+   * Retrieve information about the show from
+   * [TVRage]{@link http://www.tvrage.com} or
    * [TheTVDB]{@link http://www.thetvdb.com}.
    *
    * @param {Number} id The show's TVRage or TheTVDB ID.
    * @param {String} source Either <b>tvrage</b> or <b>thetvdb</b>.
    * @returns {Promise.<Object>} Information about the show.
+   * @example
+   * TVmaze.showLookup(257655, "thetvdb").then(function(result) {
+   *   console.log(result);
+   * });
    * @memberof module:TVmaze
    */
   function showLookup(id, source) {
@@ -81,7 +96,11 @@ var TVmaze = (function tvMaze() {
    * Retrieve a list of people.
    *
    * @param {String} query The search query.
-   * @returns {Promise.<Array.<Object>|Object>} List of people.
+   * @returns {Promise.<Array.<Object>>} List of people.
+   * @example
+   * TVmaze.peopleSearch("andrew lincoln").then(function(result) {
+   *   console.log(result);
+   * });
    * @memberof module:TVmaze
    */
   function peopleSearch(query) {
@@ -89,14 +108,26 @@ var TVmaze = (function tvMaze() {
   }
 
   /**
-   * Retrieve a complete list of episodes that air in a given country on a given
-   * day.
+   * Retrieve a complete list of episodes that air in a given country on a
+   * given day.
    *
    * @param {String|null} countryCode ISO 3166-1 code of the country. If set to
    *     null, it returns the schedule for the US.
    * @param {String|null} date ISO 8601 formatted date. If set to null, it
    *     returns the schedule for the current day.
    * @returns {Promise.<Array.<Object>>}
+   * @example <caption>countryCode and date</caption>
+   * TVmaze.schedule("GB", "2015-11-28").then(function(result) {
+   *   console.log(result);
+   * });
+   * @example <caption>Only countryCode</caption>
+   * TVmaze.schedule("FR").then(function(result) {
+   *   console.log(result);
+   * });
+   * @example <caption>Only date</caption>
+   * TVmaze.schedule(null, "2015-11-27").then(function(result) {
+   *   console.log(result);
+   * });
    * @memberof module:TVmaze
    */
   function schedule(countryCode, date) {
@@ -115,10 +146,14 @@ var TVmaze = (function tvMaze() {
   }
 
   /**
-   * Retrieve a list of all future episodes known to TVmaze, regardless of their
-   * country.
+   * Retrieve a list of all future episodes known to TVmaze, regardless of
+   * their country.
    *
    * @returns {Promise.<Array.<Object>>} List of all future episodes.
+   * @example
+   * TVmaze.fullSchedule().then(function(result) {
+   *   console.log(result);
+   * });
    * @memberof module:TVmaze
    */
   function fullSchedule() {
@@ -130,6 +165,10 @@ var TVmaze = (function tvMaze() {
    *
    * @param {Number} id TVmaze ID of the show.
    * @returns {Promise.<Object>} Primary information for a given show.
+   * @example
+   * TVmaze.shows(82).then(function(result) {
+   *   console.log(result);
+   * });
    * @memberof module:TVmaze
    */
   function shows(id) {
@@ -144,6 +183,14 @@ var TVmaze = (function tvMaze() {
    *     specials.
    * @returns {Promise.<Array.<Object>>} Complete list of episodes for the
    *     given show.
+   * @example
+   * TVmaze.showEpisodeList(335).then(function(result) {
+   *   console.log(result);
+   * });
+   * @example <caption>Include special episodes</caption>
+   * TVmaze.showEpisodeList(335, true).then(function(result) {
+   *   console.log(result);
+   * });
    * @memberof module:TVmaze
    */
   function showEpisodeList(id, specials) {
@@ -151,7 +198,7 @@ var TVmaze = (function tvMaze() {
     if (specials) {
       apiURL += "?specials=1";
     }
-    return getJSON(rootURL + "/shows/" + id + "/episodes");
+    return getJSON(rootURL + apiURL);
   }
 
   /**
@@ -162,6 +209,10 @@ var TVmaze = (function tvMaze() {
    * @param {Number} season Season number.
    * @param {Number} episode Episode number.
    * @returns {Promise.<Object>} Information about the episode.
+   * @example
+   * TVmaze.episodeByNumber(171, 6, 22).then(function(result) {
+   *   console.log(result);
+   * });
    * @memberof module:TVmaze
    */
   function episodeByNumber(id, season, episode) {
@@ -174,10 +225,14 @@ var TVmaze = (function tvMaze() {
    * 
    * @param {Number} id TVmaze ID of the show.
    * @param {String} date ISO 8601 formatted date.
-   * @returns {Promise.<Array.<Object>|Object>}
+   * @returns {Promise.<Array.<Object>>}
+   * @example
+   * TVmaze.episodeByDate(431, "1994-09-22").then(function(result) {
+   *   console.log(result);
+   * });
    * @memberof module:TVmaze
    */
-  function episodeByDate (id, date) {
+  function episodeByDate(id, date) {
     return getJSON(rootURL + "/shows/" + id + "/episodesbydate?date=" + date);
   }
 
@@ -186,6 +241,10 @@ var TVmaze = (function tvMaze() {
    *
    * @param {Number} id TVmaze ID of the show.
    * @returns {Promise.<Array.<Object>>} List of main cast for the show.
+   * @example
+   * TVmaze.showCast(1369).then(function(result) {
+   *   console.log(result);
+   * });
    * @memberof module:TVmaze
    */
   function showCast(id) {
@@ -196,7 +255,11 @@ var TVmaze = (function tvMaze() {
    * Retrieve a list of aliases for the show.
    *
    * @param {Number} id TVmaze ID of the show.
-   * @returns {Promise.<Array.<Object>|Object>} List of aliases for the show.
+   * @returns {Promise.<Array.<Object>>} List of aliases for the show.
+   * @example
+   * TVmaze.showAKAs(73).then(function(result) {
+   *   console.log(result);
+   * });
    * @memberof module:TVmaze
    */
   function showAKAs(id) {
@@ -210,6 +273,10 @@ var TVmaze = (function tvMaze() {
    * 
    * @param {Number} pageNumber The page number.
    * @returns {Promise.<Array.<Object>>} List of shows in the TVmaze database.
+   * @example
+   * TVmaze.showIndex(5).then(function(result) {
+   *   console.log(result);
+   * });
    * @memberof module:TVmaze
    */
   function showIndex(pageNumber) {
@@ -223,6 +290,14 @@ var TVmaze = (function tvMaze() {
    * @param {Boolean|null} embed If <b>true</b>, embeds cast credits for the
    *     person.
    * @returns {Promise.<Object>} All primary information for a given person.
+   * @example
+   * TVmaze.personInfo(3358).then(function(result) {
+   *   console.log(result);
+   * });
+   * @example <caption>Embed cast credits</caption>
+   * TVmaze.personInfo(3358, true).then(function(result) {
+   *   console.log(result);
+   * });
    * @memberof module:TVmaze
    */
   function personInfo(id, embed) {
@@ -239,7 +314,15 @@ var TVmaze = (function tvMaze() {
    * @param {Number} id TVmaze ID of the show.
    * @param {Boolean|null} embed If <b>true</b>, embeds full information for
    *     the shows and characters.
-   * @returns {Promise.<Array.<Object>|Object>} All (show-level) cast credits.
+   * @returns {Promise.<Array.<Object>>} All (show-level) cast credits.
+   * @example
+   * TVmaze.personCastCredits(10260).then(function(result) {
+   *   console.log(result);
+   * });
+   * @example <caption>Embed show and character information</caption>
+   * TVmaze.personCastCredits(10260, true).then(function(result) {
+   *   console.log(result);
+   * });
    * @memberof module:TVmaze
    */
   function personCastCredits(id, embed) {
@@ -256,7 +339,15 @@ var TVmaze = (function tvMaze() {
    * @param {Number} id TVmaze ID of the show.
    * @param {Boolean|null} embed If <b>true</b>, embeds full information for
    *     the shows.
-   * @returns {Promise.<Array.<Object>|Object>} All (show-level) crew credits.
+   * @returns {Promise.<Array.<Object>>} All (show-level) crew credits.
+   * @example
+   * TVmaze.personCrewCredits(284).then(function(result) {
+   *   console.log(result);
+   * });
+   * @example <caption>Embed show information</caption>
+   * TVmaze.personCrewCredits(284, true).then(function(result) {
+   *   console.log(result);
+   * });
    * @memberof module:TVmaze
    */
   function personCrewCredits(id, embed) {
@@ -273,6 +364,10 @@ var TVmaze = (function tvMaze() {
    *
    * @returns {Promise.<Object>} A list of all shows in the TVmaze database
    *     and the timestamp when they were updated.
+   * @example
+   * TVmaze.showUpdates().then(function(result) {
+   *   console.log(result);
+   * });
    * @memberof module:TVmaze
    */
   function showUpdates() {
